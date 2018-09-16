@@ -3,7 +3,7 @@ package by.bsuir.modeling.lab1.service
 object Service {
   def LCG(r0: Double, a: Double, m: Double, n: Int): Seq[Double] = {
     def iter(r: Double, i: Int): List[Double] =
-      if (i <= n) {
+      if (i < n) {
         val cur = a * r % m
         (r / m) :: iter(cur, i + 1)
       }
@@ -31,4 +31,9 @@ object Service {
   }
 
   def deviation(seq: Seq[Double]): Double = math.sqrt(dispersion(seq))
+
+  def test(seq: Seq[Double]): (Double, Double) = {
+    val k = seq.sliding(2, 2).count(s => math.pow(s(0), 2) + math.pow(s(1), 2) < 1)
+    (2 * k / seq.length.toDouble, math.Pi / 4)
+  }
 }
