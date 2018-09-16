@@ -22,4 +22,13 @@ object Service {
 
     iter(seq.min, 0)
   }
+
+  def mean(seq: Seq[Double]): Double = seq.sum / seq.length
+
+  def dispersion(seq: Seq[Double]): Double = {
+    val m = mean(seq)
+    seq.map(i => math.pow(i - m, 2)).sum / (seq.length - 1)
+  }
+
+  def deviation(seq: Seq[Double]): Double = math.sqrt(dispersion(seq))
 }
