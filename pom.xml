@@ -6,7 +6,24 @@
 
     <groupId>by.bsuir.modeling</groupId>
     <artifactId>modeling</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>lab-1</module>
+    </modules>
+
+    <properties>
+        <scalafx.version>8.0.144-R12</scalafx.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.scalafx</groupId>
+            <artifactId>scalafx_2.12</artifactId>
+            <version>${scalafx.version}</version>
+        </dependency>
+    </dependencies>
 
 
 </project>
