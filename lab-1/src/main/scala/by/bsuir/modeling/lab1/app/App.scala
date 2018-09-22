@@ -6,7 +6,7 @@ import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.Scene
-import scalafx.scene.chart.{LineChart, NumberAxis, XYChart}
+import scalafx.scene.chart._
 import scalafx.scene.control.{Button, Label, TextField}
 import scalafx.scene.layout.{GridPane, HBox}
 
@@ -18,8 +18,10 @@ object App extends JFXApp {
 
         val histogram = {
           val histo = Service.histogram(seq)
-          val data = ObservableBuffer(histo map { case (x, y) => XYChart.Data[Number, Number](x, y) })
-          LineChart(NumberAxis(), NumberAxis(), ObservableBuffer(XYChart.Series("Histogram", data)))
+          val dataHist = ObservableBuffer(histo map { case (x, y) => XYChart.Data[String, Number](x.toString, y) })
+          new BarChart(CategoryAxis(), NumberAxis()) {
+            data.get().add(XYChart.Series[String, Number]("Histogram", dataHist))
+          }
         }
 
         content = histogram
@@ -59,7 +61,7 @@ object App extends JFXApp {
             onMouseClicked = _ => {
               val seq = Service.LCG(r0 = r0.text.value.toDouble, a = a.text.value.toDouble, m = m.text.value.toDouble, n = 200)
               val histo = Service.histogram(seq)
-              val data = ObservableBuffer(histo map { case (x, y) => XYChart.Data[Number, Number](x, y) })
+              val data = ObservableBuffer(histo map { case (x, y) => XYChart.Data[String, Number](x.toString, y) })
 
               histogram.getData().clear()
               histogram.getData().add(XYChart.Series("Histogram", data))
@@ -71,6 +73,7 @@ object App extends JFXApp {
           }
 
           addRow(8, calculate)
+
         }
 
         children = List(histogram, grid)
